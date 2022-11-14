@@ -19,7 +19,10 @@ public class DisplayVehiclesServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
 
-        List<Vehicle> vehicleList = new VehicleDaoImplementation().getVehicles();
+        String vehicleType = req.getParameter("vehicletype");
+        int occupancy = Integer.parseInt(req.getParameter("occupancytype"));
+
+        List<Vehicle> vehicleList = new VehicleDaoImplementation().getVehicles(vehicleType,occupancy);
 
         out.println("<center>\n" +
                 "   <table border=\"2px solid\">\n" +
@@ -28,34 +31,27 @@ public class DisplayVehiclesServlet extends HttpServlet {
                 "<th></th>\n" +
                 "     </tr>");
 
-        for(Vehicle vehicle : vehicleList) {
-            out.println("<tr><th>"+vehicle.getVehicleId()+"</th><th>"+vehicle.getVehicleName()+"</th><th>"+vehicle.getRegistrationNumber()+"</th>" +
-                    "<th>"+vehicle.getVehicleType()+"</th>\n" +
-                    "       <th>"+vehicle.getVehicleOccupancy()+"</th><th>"+vehicle.getFarePerHour()+"</th>" +
-                    "<th>"+vehicle.getStatus()+"</th>" +
-                    "<th><input type=\"radio\" value = vehicleId?="+vehicle.getVehicleId()+" ></th>\n" +
+        out.println("<form action=\"Booking\" method=\"get\">\n");
+
+        for (Vehicle vehicle : vehicleList) {
+            out.println("<tr><th>" + vehicle.getVehicleId() + "</th><th>" + vehicle.getVehicleName() + "</th><th>" + vehicle.getRegistrationNumber() + "</th>" +
+                    "<th>" + vehicle.getVehicleType() + "</th>\n" +
+                    "       <th>" + vehicle.getVehicleOccupancy() + "</th><th>" + vehicle.getFarePerHour() + "</th>" +
+                    "<th>" + vehicle.getStatus() + "</th>" +
+                    "<th><input type=\"radio\" name='vehicleId' value = " + vehicle.getVehicleId() + " ></th>\n" +
                     "     </tr></center>");
         }
 
-        out.println("Welcome User");
-       out.println("<form action=\"Booking\" method=\"get\">\n" +
-               "\n" +
-               "     Enter User Id :\n" +
-               "     <input type=\"number\" name=\"uid\"><hr>\n" +
-               "     \n" +
-               "     Enter Vehicle Id :\n" +
-               "     <input type=\"number\" name=\"vid\"><hr>\n" +
-               "     \n" +
-               "     Select Starting time :\n" +
-               "     <input type=datetime-local name=\"starttime\"><hr>\n" +
-               "\n" +
-               "     Select Ending Here :\n" +
-               "     <input type=datetime-local name=\"endtime\"><hr>\n" +
-               "\n" +
-               "     <input type=\"submit\" value=\"SUBMIT\"><input type=\"reset\" value=\"RESET\">\n" +
-               "\n" +
-               "   </form>");
-
+        out.println("Welcome User<br>" +
+                "     Select Starting time :\n" +
+                "     <input type=datetime-local name=\"starttime\"><hr>\n" +
+                "\n" +
+                "     Select Ending Here :\n" +
+                "     <input type=datetime-local name=\"endtime\"><hr>\n" +
+                "\n" +
+                "     <input type=\"submit\" value=\"SUBMIT\"><input type=\"reset\" value=\"RESET\">\n" +
+                "\n" +
+                "   </form>");
 
 
     }

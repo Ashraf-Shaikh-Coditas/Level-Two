@@ -23,13 +23,13 @@ public class RegisterUserServlet extends HttpServlet {
         String password = req.getParameter("password");
         long mobileNumber = Long.parseLong(req.getParameter("mobilenumber"));
 
-        User user = new User(userName,password,mobileNumber);
+        User user = new User(userName, password, mobileNumber);
 
         new UserDaoImplementation().addUser(user);
 
         out.println("User Registered Successfully");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("Login.jsp");
-        requestDispatcher.include(req,resp);
+        requestDispatcher.include(req, resp);
 
     }
 }

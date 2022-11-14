@@ -8,7 +8,7 @@ public class FactoryProvider {
     public static EntityManagerFactory entityManagerFactory;
 
     public static EntityManagerFactory getFactory() {
-        if(entityManagerFactory==null) {
+        if (entityManagerFactory == null) {
             entityManagerFactory = Persistence.createEntityManagerFactory("ashraf");
 
         }
